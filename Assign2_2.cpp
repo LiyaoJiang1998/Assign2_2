@@ -76,6 +76,7 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 //initialize rawdata read
 Sd2Card card;
 
+//struct use to save the information pulled from sd
 struct restaurant {
   int32_t lat;
   int32_t lon;
@@ -83,6 +84,7 @@ struct restaurant {
   char name[55];
 };
 
+//smaller struct, due to memory limitation
 struct RestDist {
   uint16_t index; // index of restaurant from 0 to NUM_RESTAURANTS-1
   uint16_t dist;  // Manhatten distance to cursor position
@@ -129,6 +131,7 @@ bool rightedge =0;
 bool topedge =0;
 bool bottomedge =0;
 
+//left top corner coordinate of the drawed portion of the map
 int yegX;
 int yegY;
 
@@ -189,6 +192,7 @@ void setup() {
 }
 
 //funciton that detects touch from lecture 13
+//used for changerating
 //returns 0 when no touch
 //returns 1 when minus button touched
 //returns 2 when plus button touched
@@ -281,6 +285,7 @@ void redrawMap(){
 }
 
 //In mode2 process the movement of joystick
+//when it reaches after bottom item or top item, do page scrolling
 bool joysticklist(int& selectedRest, int& page){
   int yVal = analogRead(JOY_VERT);
   //page rolling cases
@@ -296,6 +301,7 @@ bool joysticklist(int& selectedRest, int& page){
     selectedRest = 0;
     return 1;
   }
+  //case with no page change
   // joystick moved down
   else if (yVal > JOY_CENTER + JOY_DEADZONE) {
     if(page == ceil(num/30)){
@@ -343,6 +349,7 @@ void getRestaurantFast(int restIndex, restaurant* restPtr) {
   previousblockNum = blockNum;
 }
 
+//Manhatten distance btw cursor and each restaurant
 uint16_t Manhatten(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2){
   uint16_t distance;
   uint16_t p1= abs(x1-x2);
@@ -415,6 +422,9 @@ void swap_rest(RestDist *ptr_rest1, RestDist *ptr_rest2) {
 // }
 
 //pivot function
+//implemented based on the lecture slide, used by the quicksort
+//make all entries on the left to pi smaller or equal than pi
+//all the entries on the right to pi bigger than pi
 int pivot(RestDist *rest_dist, int len, int pi){
 	swap_rest(&rest_dist[pi], &rest_dist[len-1]);
 	int lo=0;
@@ -440,9 +450,11 @@ void qsort(RestDist *rest_dist, int len){
 	if(len <= 1){
 		return;
 	}
-	//pick a pivot to be the middle
+	//pick a pivot to be the middle, for convinience, we take the middle one
 	int pi = floor(len/2);
 	int new_pi = pivot(rest_dist, len , pi);
+  //for left and right part next to pi
+  //do quicksort recursively
 	qsort(rest_dist,new_pi);
 	qsort(rest_dist + new_pi,len-new_pi);
 }
@@ -464,10 +476,7 @@ void sortedres(uint8_t minstar,RestDist *rest_dist){
       reali++;
     }
   }
-  // Serial.println("Total number of res");
-  // Serial.println(num);
 
-  // ssort(rest_dist,num);
   //we use the new quick pivot sort to sort the restaurants
   qsort(rest_dist,num);
 
@@ -485,6 +494,7 @@ void displayNames(RestDist *restDist){
   int selectedRest = 0; // which restaurant is selected?
   int preselectedRest = 0;
   restaurant r;
+  //variables storing the page information
   int page = 0;
   bool pagechange = 1;
 
@@ -601,6 +611,7 @@ void displayNames(RestDist *restDist){
       break;
     }
     preselectedRest = selectedRest;
+    //check pagechange
     pagechange = joysticklist(selectedRest,page);
     delay(30);
     if(preselectedRest != selectedRest && pagechange == 0){
@@ -622,6 +633,7 @@ void displayNames(RestDist *restDist){
   }
 }
 
+//draw the "ui" of the rating selector
 void rating(uint8_t star){
   //fill the rightmost 48 columns to be black
   tft.fillRect(273,0,48,240,0);
@@ -640,6 +652,7 @@ void rating(uint8_t star){
   tft.print("-");
 }
 
+//change the rating using TouchScreen
 uint8_t changerating(uint8_t star){
   uint8_t touch = checkTouch();
   if(touch == 2){
@@ -655,6 +668,7 @@ uint8_t changerating(uint8_t star){
   else{}
   return star;
 }
+
 //function that reads the movement of the joystick
 //and modify the cursor position
 void processJoystick() {
