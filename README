@@ -1,0 +1,71 @@
+Name:LIYAO JIANG(1512446)
+Section#: EA1
+
+Name：XIAOLEI ZHANG（1515335）
+Section#：LBL A1
+
+Assignment 2 Part 1 restaurant finder:
+A restaurant finder program controlled using joystick
+In mode 0, When users using joystick to control the cursor to move on the whole
+map of Edmonton. In mode 1, users can click joystick then the program will show
+the nearby restaurants in LED display, restaurants name will been displayed at
+screen, users should be able to move a highlight block to select a restaurant
+on the list. When users selected the restaurant in the list and pushed button
+in mode 1, program will automatically enter mode 0, and redisplay the map,
+with the selected restaurant located at the centre of the screen.
+NOTE: 1. When restaurant is outside the map of Edmonton, the cursor should be
+placed on the map location that is closest to the selected restaurant.
+2. If the selected restaurant is close to the map boundary, then the cursor does
+not have to be placed at the centre of the screen.
+
+
+list of files needed in the same working directory
+PART1.cpp
+lcd_image.h
+lcd_image.cpp
+Makefile
+
+RUNNING INSTRUCTIONS:
+Connect the Arduino to your computer
+Use the terminal to navigate to the directory including:
+Makefile & all the .cpp and .h files
+Use "make upload" command to compile and upload the program to your Arduino
+Use the joystick to move the cursor around the map, press on the joystick to
+find nearby restaurants and scroll in the list using joystick. Click to show the
+cursor on the position of the selected restaurant on map
+
+Accessories:
+* Arduino Mega Board (AMG)
+* Adafruit ILI934 breakout board
+	(the display, touch screen, and SD card)
+* Wires
+* JOYSTICK
+
+Wiring required for this program:
+
+Joystick pins:
+	Analog pin A1 should connect to pin VRx
+	Analog pin A0 should connect to pin VRy
+	Digital pin 2 should connect to pin SW
+Display and SD and touch screen follows the standard wiring:
+//copied from 'Wiring for Adafruit ILI9341 File'
+
+Board Pin <---> Arduino Pin
+===========================
+GND             GND
+Vin             5V
+3Vo             NOT CONNECTED
+CLK             52
+MISO            50
+MOSI            51
+CS              10
+D/C             9
+RST             NOT CONNECTED
+Lite            NOT CONNECTED
+Y+              A2 (analog pin)
+X+              4  (digital pin)
+Y-              5  (digital pin)
+X-              A3 (analog pin)
+IM0 - IM3       NOT CONNECTED (they expect a 3.3v signal, DON'T CONNECT!)
+CCS             6
+CD              NOT CONNECTED
