@@ -4,7 +4,7 @@
 // Name：XIAOLEI ZHANG（1515335）
 // Section#：LBL A1
 //
-// Assignment 2 Part 1 restaurant finder
+// Assignment 2 Part 2 restaurant finder
 
 //include headers for display and sd and touchscreen and the lcd_image library.
 #include <Arduino.h>

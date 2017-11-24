@@ -4,7 +4,7 @@ Section#: EA1
 Name：XIAOLEI ZHANG（1515335）
 Section#：LBL A1
 
-Assignment 2 Part 1 restaurant finder:
+Assignment 2 Part 2 restaurant finder:
 A restaurant finder program controlled using joystick
 In mode 0, When users using joystick to control the cursor to move on the whole
 map of Edmonton. In mode 1, users can click joystick then the program will show
@@ -18,6 +18,16 @@ placed on the map location that is closest to the selected restaurant.
 2. If the selected restaurant is close to the map boundary, then the cursor does
 not have to be placed at the centre of the screen.
 
+Modified based on PART1:
+Added rating selector feature.
+By default, rating selector set to 1, i.e. all restaurant with at least one star
+will appear. Use plus and minus button on the Touch Screen, to change the
+selected Rating. If rating 4 selected, only restaurants with at least 4 stars
+will be showed after clicking on the map
+
+The list of restaurants sorted based on distance to the cursor in mode 2.
+Now have several pages, scroll to the bottom and keep scrolling will go to next
+page, and vice versa. Also a quicker sorting quicksort algorithm is used.
 
 list of files needed in the same working directory
 PART1.cpp
